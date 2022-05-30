@@ -20,6 +20,13 @@ public class Item extends PanacheEntityBase {
     @Column(name = "item_tipo")
     private String tipo;
 
+    public Item(){}
+
+    public Item(String nombre, int quality) {
+        this.nombre = nombre;
+        this.quality = quality;
+    }
+
     public String getNombre() {
         return nombre;
     }

@@ -18,6 +18,13 @@ public class Usuaria extends PanacheEntityBase {
     @Column(name = "user_prop")
     private int destreza;
 
+    public Usuaria(){}
+
+    public Usuaria(String nombre, int destreza) {
+        this.nombre = nombre;
+        this.destreza = destreza;
+    }
+
     public String getNombre() {
         return nombre;
     }
