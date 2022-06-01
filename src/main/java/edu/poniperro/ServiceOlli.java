@@ -74,7 +74,6 @@ public class ServiceOlli {
         for (Orden orden : comanda) {
             orden.persist();
         }
-
         return comanda;
     }
 }

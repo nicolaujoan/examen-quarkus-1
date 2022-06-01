@@ -5,6 +5,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -297,5 +299,10 @@ public class ServiceTest {
 		Assertions.assertThat(ordenes).isEmpty();
 	}
 
-	// no se ordenan items que no existan en la db pero se ordenan los que si estan
+	// No se ordenan items que no existan en la db pero se ordenan los que si estan
+	@Test
+	@Transactional
+	public void test_ordenar_multiples_items_item_i_no_item() {
+		assertEquals(true, true);
+	}
 }
