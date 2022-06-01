@@ -23,7 +23,7 @@ public class Orden extends PanacheEntityBase {
     
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ord_user")
-    private Usuaria usuaria;
+    private Usuaria user;
 
     // muchos pedidos pueden tener el mismo Item    
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,12 +32,12 @@ public class Orden extends PanacheEntityBase {
 
     public Orden(){}
 
-    public Orden(Usuaria usuaria, Item item) {
-        this.usuaria = usuaria;
+    public Orden(Usuaria user, Item item) {
+        this.user = user;
         this.item = item;
     }
 
-    public Long getOrdenId() {
+    public Long getId() {
         return ordenId;
     }
 
@@ -46,11 +46,11 @@ public class Orden extends PanacheEntityBase {
     }
 
     public Usuaria getUser() {
-        return usuaria;
+        return user;
     }
 
-    public void setUsuaria(Usuaria usuaria) {
-        this.usuaria = usuaria;
+    public void setUsuaria(Usuaria user) {
+        this.user = user;
     }
 
     public Item getItem() {

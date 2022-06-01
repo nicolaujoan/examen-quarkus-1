@@ -22,6 +22,10 @@ public class Item extends PanacheEntityBase {
 
     public Item(){}
 
+    public Item(String itemName) {
+        this.nombre = itemName;
+    }
+
     public Item(String nombre, int quality) {
         this.nombre = nombre;
         this.quality = quality;

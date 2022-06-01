@@ -5,6 +5,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.*;
@@ -171,79 +172,79 @@ public class ServiceTest {
 	//  * 
     //  * El metodo devuelve la orden de tipo Orden creada.
 	//  */
-	// @Test
-	// @Transactional
-	// public void test_comanda_ok() {
-    //     Assertions.assertThat(servicio).isNotNull();
-	// 	Orden orden = servicio.comanda("Hermione", "AgedBrie");
-	// 	Assertions.assertThat(orden).isNotNull();
-	// 	Assertions.assertThat(orden.getId()).isNotZero();
-	// 	Assertions.assertThat(orden.getUser().getNombre()).isEqualTo("Hermione");
-	// 	Assertions.assertThat(orden.getItem().getNombre()).isEqualTo("AgedBrie");
+	@Test
+	@Transactional
+	public void test_comanda_ok() {
+        Assertions.assertThat(servicio).isNotNull();
+		Orden orden = servicio.comanda("Hermione", "AgedBrie");
+		Assertions.assertThat(orden).isNotNull();
+		Assertions.assertThat(orden.getId()).isNotZero();
+		Assertions.assertThat(orden.getUser().getNombre()).isEqualTo("Hermione");
+		Assertions.assertThat(orden.getItem().getNombre()).isEqualTo("AgedBrie");
 
-	// 	TypedQuery<Orden> query = em.createQuery("select orden from Orden orden join orden.user user where user.nombre = 'Hermione'", Orden.class);
-	// 	List<Orden> pedidos = query.getResultList();
+		TypedQuery<Orden> query = em.createQuery("select orden from Orden orden join orden.user user where user.nombre = 'Hermione'", Orden.class);
+		List<Orden> pedidos = query.getResultList();
 		
-    //     Assertions.assertThat(pedidos).isNotNull();
-	// 	Assertions.assertThat(pedidos).hasSize(2);
-    //     Assertions.assertThat(pedidos.get(1).getUser().getNombre()).isEqualTo("Hermione");
-	// 	Assertions.assertThat(pedidos.get(1).getItem().getNombre()).isEqualToIgnoringCase("AgedBrie");
-	// 	em.find(Orden.class, pedidos.get(1).getId()).delete();
-	// }
+        Assertions.assertThat(pedidos).isNotNull();
+		Assertions.assertThat(pedidos).hasSize(2);
+        Assertions.assertThat(pedidos.get(1).getUser().getNombre()).isEqualTo("Hermione");
+		Assertions.assertThat(pedidos.get(1).getItem().getNombre()).isEqualToIgnoringCase("AgedBrie");
+		em.find(Orden.class, pedidos.get(1).getId()).delete();
+	}
 
-	// /**
-    //  * Implementa el metodo comanda del servicio
-	//  * para que NO permita generar pedidos de productos
-	//  * si no existe la usuaria en la base de datos.
-	//  */
-	// @Test
-	// public void test_comanda_no_user() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	Orden orden = servicio.comanda("Severus", "+5 Dexterity Vest");
-	// 	Assertions.assertThat(orden).isNull();
-	// 	Usuaria profesor = servicio.cargaUsuaria("Severus");
-	// 	Assertions.assertThat(profesor).isNotNull();
-	// 	Assertions.assertThat(profesor.getNombre()).isEmpty();
-    //     Assertions.assertThat(profesor.getDestreza()).isZero();
+	/**
+     * Implementa el metodo comanda del servicio
+	 * para que NO permita generar pedidos de productos
+	 * si no existe la usuaria en la base de datos.
+	 */
+	@Test
+	public void test_comanda_no_user() {
+		Assertions.assertThat(servicio).isNotNull();
+		Orden orden = servicio.comanda("Severus", "+5 Dexterity Vest");
+		Assertions.assertThat(orden).isNull();
+		Usuaria profesor = servicio.cargaUsuaria("Severus");
+		Assertions.assertThat(profesor).isNotNull();
+		Assertions.assertThat(profesor.getNombre()).isEmpty();
+        Assertions.assertThat(profesor.getDestreza()).isZero();
 
-	// 	Orden pedido = em.find(Orden.class, 3L);
-    //     Assertions.assertThat(pedido).isNull();
-	// }
+		Orden pedido = em.find(Orden.class, 3L);
+        Assertions.assertThat(pedido).isNull();
+	}
     
 	// /**
     //  * Implementa el metodo comanda del servicio
 	//  * para que NO permita generar pedidos de productos
 	//  * si no existe el item en la base de datos.
 	//  */
-	// @Test
-	// public void test_comanda_no_item() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	Orden orden = servicio.comanda("Hermione", "Reliquias de la muerte");
-	// 	Assertions.assertThat(orden).isNull();
-	// 	Item item = (Item) servicio.cargaItem("Reliquias de la muerte");
-	// 	Assertions.assertThat(item).isNotNull();
-	// 	Assertions.assertThat(item.getNombre()).isEmpty();
-	// 	Assertions.assertThat(item.getQuality()).isZero();
+	@Test
+	public void test_comanda_no_item() {
+		Assertions.assertThat(servicio).isNotNull();
+		Orden orden = servicio.comanda("Hermione", "Reliquias de la muerte");
+		Assertions.assertThat(orden).isNull();
+		Item item = (Item) servicio.cargaItem("Reliquias de la muerte");
+		Assertions.assertThat(item).isNotNull();
+		Assertions.assertThat(item.getNombre()).isEmpty();
+		Assertions.assertThat(item.getQuality()).isZero();
 
-	// 	Orden pedido = em.find(Orden.class, 3L);
-    //     Assertions.assertThat(pedido).isNull();
-	// }
+		Orden pedido = em.find(Orden.class, 3L);
+        Assertions.assertThat(pedido).isNull();
+	}
 
-	// /**
-	//  * Modifica el metodo comanda para que 
-	//  * NO permita generar pedidos de productos
-	//  * cuando la destreza de la usuaria sea menor
-	//  * que la calidad del Item.
-	//  */
-	// @Test
-	// public void test_comanda_item_sin_pro() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	Orden orden = servicio.comanda("Doobey", "+5 Dexterity Vest");
-	// 	Assertions.assertThat(orden).isNull();
+	/**
+	 * Modifica el metodo comanda para que 
+	 * NO permita generar pedidos de productos
+	 * cuando la destreza de la usuaria sea menor
+	 * que la calidad del Item.
+	 */
+	@Test
+	public void test_comanda_item_sin_pro() {
+		Assertions.assertThat(servicio).isNotNull();
+		Orden orden = servicio.comanda("Doobey", "+5 Dexterity Vest");
+		Assertions.assertThat(orden).isNull();
 
-	// 	Orden pedido = em.find(Orden.class, 3L);
-    //     Assertions.assertThat(pedido).isNull();
-	// }
+		Orden pedido = em.find(Orden.class, 3L);
+        Assertions.assertThat(pedido).isNull();
+	}
 
 	// /**
 	//  * Implementa el metodo comandaMultiple para que una usuaria
@@ -253,47 +254,48 @@ public class ServiceTest {
 	//  * El metodo devuelve las ordenes creadas.
 	//  * 
 	//  * No se crean ordenes si la usuaria no existe previamente
-	//  * en la base de datos.
+	//  * en la base de datos. -> [] empty list
 	//  * 
-	//  * No se ordenan items que no existan en la base de datos.
+	//  * No se ordenan items que no existan en la base de datos. -> [] empty list
 	//  */
 
-	// @Test
-	// @Transactional
-	// public void test_ordenar_multiples_items_ok() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	List<Orden> ordenes = servicio.comandaMultiple("Hermione", Arrays.asList("AgedBrie", "Elixir of the Mongoose"));
-	// 	Assertions.assertThat(ordenes).isNotEmpty();
-	// 	Assertions.assertThat(ordenes).size().isEqualTo(2);
+	@Test
+	@Transactional
+	public void test_ordenar_multiples_items_ok() {
+		Assertions.assertThat(servicio).isNotNull();
+		List<Orden> ordenes = servicio.comandaMultiple("Hermione", Arrays.asList("AgedBrie", "Elixir of the Mongoose"));
+		Assertions.assertThat(ordenes).isNotEmpty();
+		Assertions.assertThat(ordenes).size().isEqualTo(2);
 
-	// 	TypedQuery<Orden> query = em.createQuery("select orden from Orden orden join orden.user user where user.nombre = 'Hermione'", Orden.class);
-	// 	List<Orden> pedidos = query.getResultList();
+		TypedQuery<Orden> query = em.createQuery("select orden from Orden orden join orden.user user where user.nombre = 'Hermione'", Orden.class);
+		List<Orden> pedidos = query.getResultList();
 		
-    //     Assertions.assertThat(pedidos).isNotNull();
-	// 	Assertions.assertThat(pedidos).hasSize(3);
-    //     Assertions.assertThat(pedidos.get(1).getUser().getNombre()).isEqualTo("Hermione");
-	// 	Assertions.assertThat(pedidos.get(1).getItem().getNombre()).isEqualToIgnoringCase("AgedBrie");
-	// 	Assertions.assertThat(pedidos.get(2).getItem().getNombre()).isEqualToIgnoringCase("Elixir of the Mongoose");
-	// 	em.find(Orden.class, pedidos.get(2).getId()).delete();
-	// 	em.find(Orden.class, pedidos.get(1).getId()).delete();
-	// }
+        Assertions.assertThat(pedidos).isNotNull();
+		Assertions.assertThat(pedidos).hasSize(3);
+        Assertions.assertThat(pedidos.get(1).getUser().getNombre()).isEqualTo("Hermione");
+		Assertions.assertThat(pedidos.get(1).getItem().getNombre()).isEqualToIgnoringCase("AgedBrie");
+		Assertions.assertThat(pedidos.get(2).getItem().getNombre()).isEqualToIgnoringCase("Elixir of the Mongoose");
+		em.find(Orden.class, pedidos.get(2).getId()).delete();
+		em.find(Orden.class, pedidos.get(1).getId()).delete();
+	}
 
-	// // No se permiten ordenes si el usuario no existe en la base de datos
-	// @Test
-	// @Transactional
-	// public void test_ordenar_multiples_items_no_user() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	List<Orden> ordenes = servicio.comandaMultiple("Severus", Arrays.asList("+5 Dexterity Vest", "Elixir of the Mongoose"));
-	// 	Assertions.assertThat(ordenes).isEmpty();
-	// }
+	// No se permiten ordenes si el usuario no existe en la base de datos
+	@Test
+	@Transactional
+	public void test_ordenar_multiples_items_no_user() {
+		Assertions.assertThat(servicio).isNotNull();
+		List<Orden> ordenes = servicio.comandaMultiple("Severus", Arrays.asList("+5 Dexterity Vest", "Elixir of the Mongoose"));
+		Assertions.assertThat(ordenes).isEmpty();
+	}
 
-	// // No se ordenan items que no existan en la base de datos
-	// @Test
-	// @Transactional
-	// public void test_ordenar_multiples_items_no_item() {
-	// 	Assertions.assertThat(servicio).isNotNull();
-	// 	List<Orden> ordenes = servicio.comandaMultiple("Hermione", Arrays.asList("Guardapelo Salazar", "Reliquias de la Muerte"));
-	// 	Assertions.assertThat(ordenes).isEmpty();
-	// }
-	
+	// No se ordenan items que no existan en la base de datos
+	@Test
+	@Transactional
+	public void test_ordenar_multiples_items_no_item() {
+		Assertions.assertThat(servicio).isNotNull();
+		List<Orden> ordenes = servicio.comandaMultiple("Hermione", Arrays.asList("Guardapelo Salazar", "Reliquias de la Muerte"));
+		Assertions.assertThat(ordenes).isEmpty();
+	}
+
+	// no se ordenan items que no existan en la db pero se ordenan los que si estan
 }

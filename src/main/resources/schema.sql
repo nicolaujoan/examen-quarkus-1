@@ -1,3 +1,4 @@
+delete schema
 drop table t_users if exists;
 drop table t_items if exists;
 drop table t_ordenes if exists;
