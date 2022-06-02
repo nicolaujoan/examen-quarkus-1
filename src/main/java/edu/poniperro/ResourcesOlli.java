@@ -1,7 +1,6 @@
 package edu.poniperro;
 
 import javax.inject.Inject;
-import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
