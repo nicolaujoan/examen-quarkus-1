@@ -71,4 +71,12 @@ public class ResourcesOlli {
             ? Response.ok(item).build()
             : Response.noContent().status(404).build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/items")
+    public Response getItems() {
+        List<Item> items = service.getAllItems();
+        return Response.ok(items).build();
+    }
 }

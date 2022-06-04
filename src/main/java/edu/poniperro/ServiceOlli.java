@@ -28,6 +28,10 @@ public class ServiceOlli {
             new Item("", 0);       
     }
 
+    public List<Item> getAllItems() {
+        return Item.listAll();
+    }
+
     public List<Orden> cargaOrden(String name) {
         List<Orden> ordenes = Orden.list("ord_user", name);
         return ordenes;
