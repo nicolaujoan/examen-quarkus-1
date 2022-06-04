@@ -53,10 +53,10 @@ public class ResourcesTest {
         given()
             .contentType(ContentType.TEXT)
         .when()
-            .get("/wellcome")
+            .get("/welcome")
         .then()
             .statusCode(200)
-            .body(is("Wellcome Ollivanders!"));
+            .body(is("Welcome Ollivanders!"));
     }
 
     /**

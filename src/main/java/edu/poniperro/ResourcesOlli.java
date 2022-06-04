@@ -25,7 +25,7 @@ public class ResourcesOlli {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/welcome")
     public String hello() {
-        return "Wellcome Ollivanders!";
+        return "Welcome Ollivanders!";
     }
 
     @GET
