@@ -57,5 +57,28 @@ Easily start your Reactive RESTful Web Services
 
 ### Extensions:
 
-$ mvn quarkus:list-extensions
-$ mvn quarkus:add-extension -Dextensions="JDBC Driver - H2"
+mvn quarkus:list-extensions
+<br>
+mvn quarkus:add-extension -Dextensions="JDBC Driver - H2"
+
+### Dockerizing the app: jvm mode
+
+<br>
+
+run the command
+
+``` 
+./mvnw clean package
+```
+
+inside the target, a .jar has been generated. So lets build the image:
+
+``` 
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/quarkus-exam-docker-jvm .
+```
+
+now run the container:
+
+``` 
+docker run -i --rm -p 8080:8080 quarkus/exam-docker-jvm
+``` 
