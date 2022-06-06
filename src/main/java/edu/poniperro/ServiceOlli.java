@@ -33,16 +33,8 @@ public class ServiceOlli {
         return ordenes;
     }
 
-    private boolean userExists(String userName) {
-        return Usuaria.find("nombre", userName).count() > 0;
-    }
-
-    private boolean itemExists(String itemName) {
-        return Item.find("nombre", itemName).count() > 0;
-    }
-
     private boolean userAndItemExists(String userName, String itemName) {
-        return userExists(userName) && itemExists(itemName);
+        return Usuaria.exists(userName) && Item.exists(itemName);
     }
 
     private boolean isDestrezaGreaterThanQuality(String userName, String itemName) {
@@ -65,15 +57,12 @@ public class ServiceOlli {
     }
 
     public List<Orden> comandaMultiple(String userName, List<String> items) {
-        if (!userExists(userName)) return Collections.<Orden>emptyList();
-        
+        if (!Usuaria.exists(userName)) return Collections.<Orden>emptyList();
+
         List<Orden> comanda = items.stream()
-                                .filter((i -> itemExists(i)))
-                                .map((i -> new Orden(new Usuaria(userName), new Item(i))))
+                                .filter((Item::exists))
+                                .map((itemName -> comanda(userName, itemName)))
                                 .collect(Collectors.toList());
-        for (Orden orden : comanda) {
-            orden.persist();
-        }
         return comanda;
     }
 }

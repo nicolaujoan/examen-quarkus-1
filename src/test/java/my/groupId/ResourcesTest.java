@@ -162,6 +162,18 @@ public class ResourcesTest {
         Assertions.assertThat(pedidos.get(0).get("item")).hasFieldOrPropertyWithValue("nombre", "+5 Dexterity Vest");
     }
 
+    @Test 
+    public void test_pedidos_no_ok() {
+        List<Map<String, Object>> pedidos = 
+            given()
+                .contentType(ContentType.JSON)
+            .when()
+                .get("/pedidos/{usuaria}", "Andreu")
+                .as(new TypeRef<List<Map<String, Object>>>() {});
+            Assertions.assertThat(pedidos).hasSize(0);
+            
+    }
+
      /**
      * La peticion 
      *      /item/<nombre>

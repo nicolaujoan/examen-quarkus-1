@@ -54,4 +54,8 @@ public class Item extends PanacheEntityBase {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     };    
+
+    public static boolean exists(String itemName) {
+        return Item.find("nombre", itemName).count() > 0;
+    }
 }

@@ -45,4 +45,8 @@ public class Usuaria extends PanacheEntityBase {
     public void setDestreza(int destreza) {
         this.destreza = destreza;
     }
+
+    public static boolean exists(String userName) {
+        return Usuaria.find("nombre", userName).count() > 0;
+    }
 }
